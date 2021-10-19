@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 5000
 
 
 express()
-  .use('/', createProxyMiddleware({ target: 'http://www.example.org', changeOrigin: true }))
+  .use('/', createProxyMiddleware({ target: 'https://lawsonassociatesinc.thundertix.com/events/display', changeOrigin: true }))
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
 // express()
