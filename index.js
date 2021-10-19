@@ -23,11 +23,18 @@ const PORT = process.env.PORT || 5000
 express()
   .use('/', createProxyMiddleware({
     target: 'https://lawsonassociatesinc.thundertix.com/events/display', changeOrigin: true, onProxyReq: function (proxyReq, req, res) {
+
+      const end = res.end;
+
       proxyReq.setHeader('Content-Security-Policy', '');
       proxyReq.setHeader('Access-Control-Allow-Origin', '*');
 
-      res.setHeader('Content-Security-Policy', '');
-      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.end = () => {
+        res.setHeader('Content-Security-Policy', '');
+        res.setHeader('Access-Control-Allow-Origin', '*');
+
+        end.apply(res);
+      }
     }
   }))
   .listen(PORT, () => console.log(`Listening on ${PORT}`))
