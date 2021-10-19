@@ -23,8 +23,8 @@ const PORT = process.env.PORT || 5000
 express()
   .use('/', createProxyMiddleware({
     target: 'https://lawsonassociatesinc.thundertix.com/events/display', changeOrigin: true, onProxyReq: function (proxyReq, req, res) {
-      proxyReq.headers['Content-Security-Policy'] = '';
-      proxyReq.headers['Access-Control-Allow-Origin'] = '*';
+      proxyReq.setHeader('Content-Security-Policy', '');
+      proxyReq.setHeader('Access-Control-Allow-Origin', '*');
     }
   }))
   .listen(PORT, () => console.log(`Listening on ${PORT}`))
