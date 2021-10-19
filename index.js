@@ -12,9 +12,21 @@ const PORT = process.env.PORT || 5000
 //   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
 
+// var proxy_options = {
+//   onProxyReq(proxyReq, req, res) {
+//     proxyReq.setHeader( 'Content-Security-Policy', '' );
+//     proxyReq.end();
+//   }
+// };
+
+
 express()
-  .use('/', createProxyMiddleware({ target: 'https://lawsonassociatesinc.thundertix.com/events/display', changeOrigin: true }))
-  .listen(PORT, () => console.log(`Listening on ${ PORT }`))
+  .use('/', createProxyMiddleware({
+    target: 'https://lawsonassociatesinc.thundertix.com/events/display', changeOrigin: true, onProxyReq: function (proxyReq, req, res) {
+      proxyReq.setHeader('Content-Security-Policy', '');
+    }
+  }))
+  .listen(PORT, () => console.log(`Listening on ${PORT}`))
 
 // express()
 //   .use(express.static(path.join(__dirname, 'public')))
