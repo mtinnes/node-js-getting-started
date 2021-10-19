@@ -7,9 +7,16 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const app = express();
 
-app.use('/', createProxyMiddleware({ target: 'http://www.example.org', changeOrigin: true }));
-app.listen(PORT);
+express()
+  .use(express.static(path.join(__dirname, 'public')))
+  .set('views', path.join(__dirname, 'views'))
+  .set('view engine', 'ejs')
+  .get('/', (req, res) => res.render('pages/index'))
+  .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
+
+//app.use('/', createProxyMiddleware({ target: 'http://www.example.org', changeOrigin: true }));
+//app.listen(PORT);
 
 // express()
 //   .use(express.static(path.join(__dirname, 'public')))
