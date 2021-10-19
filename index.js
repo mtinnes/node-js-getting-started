@@ -22,12 +22,12 @@ const PORT = process.env.PORT || 5000
 
 express()
   .use('/', createProxyMiddleware({
-    target: 'https://lawsonassociatesinc.thundertix.com/events/display', changeOrigin: true, onProxyRes: function (proxyRes, req, res) {
+    target: 'https://lawsonassociatesinc.thundertix.com/events/display', changeOrigin: true, onProxyRes: function(proxyRes, req, res) {
 
       //const end = res.end;
 
-      proxyRes.setHeader('Content-Security-Policy', '');
-      proxyRes.setHeader('Access-Control-Allow-Origin', '*');
+      proxyRes.headers['Content-Security-Policy'] = '';
+      proxyRes.headers['Access-Control-Allow-Origin'] = '*';
 
       // res.end = () => {
       //   res.setHeader('Content-Security-Policy', '');
